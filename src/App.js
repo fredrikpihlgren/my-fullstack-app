@@ -17,13 +17,9 @@ function App() {
 
   const navOptions = menuOptions.map((param, index) => {
     return (
-      <Link key={param.name} to={param.url} onClick={() => setme(index)} className={(navActive === index) ? 'active' : ''}>{param.name}</Link>
+      <Link key={param.name} to={param.url} onClick={() => setNavActive(index)} className={(navActive === index) ? 'active' : ''}>{param.name}</Link>
     )
   });
-
-  function setme(param) {
-    setNavActive(param);
-  }
   
   return (
     <Router>
