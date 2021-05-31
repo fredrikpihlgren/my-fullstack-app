@@ -1,9 +1,14 @@
 import React from 'react';
 import {useState} from 'react';
+import { useEffect } from "react";
 import './App.css';
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
+import Gallery from './components/Gallery';
+import StartPage from './components/StartPage';
 
 function App() {
+
+  // kod för att visa vilken länk som är aktiv:
 
   const [navActive, setNavActive] = useState(-1);
 
@@ -20,6 +25,37 @@ function App() {
       <Link key={param.name} to={param.url} onClick={() => setNavActive(index)} className={(navActive === index) ? 'active' : ''}>{param.name}</Link>
     )
   });
+
+  //Slut kod för att visa vilken länk som är aktiv
+
+
+  const [hamsters, setHamsters] = useState(null);
+
+  const [loadData, setLoadData] = useState(false);
+
+  
+	useEffect(() => {
+    if (loadData) {
+      async function get() {
+        console.log('gör en fetch GET/HAMSTERS');
+        const response = await fetch('/hamsters', {method: 'GET'});
+        const data = await response.json();
+        setHamsters(data);
+      }
+		  get();
+    }
+	}, [loadData])
+
+
+
+  function checkHamstersExists(param) {
+    console.log('loadData is now: ', loadData);
+    console.log('hamsters usestate is: ', hamsters);
+    //if (hamsters === null) {
+      setLoadData(param);
+    //}
+  }
+
   
   return (
     <Router>
@@ -39,9 +75,9 @@ function App() {
           */}
           <Route path="/history">HISTORIK</Route>
           <Route path="/statistics">STATS MAN!</Route>
-          <Route path="/gallery">GALLERI</Route>
+          <Route path="/gallery" render={() => <Gallery checkHamstersExists={checkHamstersExists} result={hamsters}/>}></Route>
           <Route path="/battle">BATTLE TIME!</Route>
-          <Route path="/">Välkommen ska du vara, din gris</Route>
+          <Route path="/"><StartPage/></Route>
         </Switch>
         
         
@@ -49,6 +85,9 @@ function App() {
 
 
         </main>
+        <footer>
+          yehhaha
+        </footer>
       </div>
     </Router>
   );

@@ -1,0 +1,36 @@
+.mirrorbg {
+	width:70%;
+	max-width:1000px;
+	min-height:600px;
+	display:block;
+	margin-right:2%;
+	margin-left:auto;
+	background-image:url('../images/hams.svg');
+	background-position:right bottom;
+	background-size:auto 100%;
+	background-repeat:no-repeat;
+}
+
+.upside {
+	-webkit-transform: scaleX(-1);
+  	transform: scaleX(-1);
+	-webkit-transform: scaleY(-1);
+  	transform: scaleY(-1);
+	min-height:300px;
+	background-image:
+	linear-gradient(to top, transparent, var(--color1) 60%),
+	url('../images/hams.svg');
+	background-position:center center, right bottom;
+	background-size:cover, auto 200%;
+}
+
+.pratbubbla {
+	display:block;
+	margin:0;
+	padding:0;
+	height:400px;
+	width:500px;
+	background-image:url('../images/pratbubbla.svg');
+	background-position:center center;
+	background-size:cover;
+}
