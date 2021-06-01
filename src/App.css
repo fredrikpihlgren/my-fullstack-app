@@ -4,6 +4,15 @@
   --color3:#B2EDB2;
   --color4:#EDBE9A; /*nav bg color, footer*/
   --color5:#A18670;
+
+  --shadecol:#888888;
+
+  /*
+  @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+  font-family: 'Josefin Sans', cursive;
+  */
+
 }
 
 
@@ -70,3 +79,36 @@ main {
   background-color:var(--color1);
   flex: 1 1 auto;
 }
+
+button {
+  background-color:var(--color5);
+  cursor:pointer;
+  font-weight:900;
+  color: black;
+  padding: 0.2em 0.5em;
+  margin:0.4em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.3em;
+  transition: all 0.2s ease-in-out;
+  border-radius:25px;
+  border:2px solid black;
+  box-shadow: 5px 5px #888888;
+}
+
+button:hover {
+  background-color:var(--color4);
+  border:2px solid red;
+  box-shadow: 1px 1px var(--shadecol);
+  transform: scale(0.98);
+}
+
+
+.askRemove {
+  display:block;
+  margin:0;
+  height:3em;
+  background-color:red;
+}
+

@@ -36,24 +36,26 @@ function App() {
   
 	useEffect(() => {
     if (loadData) {
-      async function get() {
+      async function getAllHamsters() {
         console.log('gör en fetch GET/HAMSTERS');
         const response = await fetch('/hamsters', {method: 'GET'});
         const data = await response.json();
         setHamsters(data);
       }
-		  get();
+		  getAllHamsters();
     }
 	}, [loadData])
-
 
 
   function checkHamstersExists(param) {
     console.log('loadData is now: ', loadData);
     console.log('hamsters usestate is: ', hamsters);
-    //if (hamsters === null) {
       setLoadData(param);
-    //}
+  }
+
+  function resetData() {
+    setLoadData(false);
+    setHamsters(null);
   }
 
   
@@ -75,7 +77,7 @@ function App() {
           */}
           <Route path="/history">HISTORIK</Route>
           <Route path="/statistics">STATS MAN!</Route>
-          <Route path="/gallery" render={() => <Gallery checkHamstersExists={checkHamstersExists} result={hamsters}/>}></Route>
+          <Route path="/gallery" render={() => <Gallery resetData={resetData} checkHamstersExists={checkHamstersExists} result={hamsters}/>}></Route>
           <Route path="/battle">BATTLE TIME!</Route>
           <Route path="/"><StartPage/></Route>
         </Switch>
