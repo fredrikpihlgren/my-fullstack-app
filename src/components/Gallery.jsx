@@ -2,71 +2,75 @@ import { useEffect } from "react";
 import {useState} from 'react';
 import '../mycss/Gallery.css';
 import Deleter from './Deleter';
-//import Modal from './Modal';
+import Modal from './Modal';
 import PostForm from './PostForm';
 
 
 //{result: {name, age}}, props ersätts med måsvingar.
 
-const Gallery = (prop) => {
+//checkHamstersExists,
+
+const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 
 
 	const [allHamsters, setAllHamsters] = useState('Fetching hamsters from API');
-	const [hamsterDelete, setHamsterDelete] = useState(null);
+
+	const [displayModal, setDisplayModal] = useState(false);
+	const [hamsterSelected, setHamsterSelected] = useState(null);
+
+	function hideShowModal(param) {
+		setDisplayModal(!displayModal);
+		setHamsterSelected(param);
+		console.log(param);
+	}
 
 
 	useEffect(() => {
-		if (prop.result != null) {
+
+		function hideShowModal(param) {
+			setDisplayModal(displayModal => !displayModal)
+			setHamsterSelected(param);
+			console.log(param);
+		}
+		
+		if (hamsters != null) { //prop.
 			//console.log(prop.result);
-			const hamsterCards = prop.result.map(hamster => (
-				<div className='bgcard' key={hamster.id}>
-					<div className='hamsterCard'>
-						<h1>{hamster.name}</h1>
-						{/*<p>{hamster.imgName}</p>*/}
-						<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
-						<Deleter name={hamster.name} id={hamster.id} hamsterIdDelete={hamsterIdDelete}/>
+			const hamsterCards = hamsters.map(hamster => ( //prop.
+				<article className='bgcard' key={hamster.id}>
+					<div className='hamstercard'>
+						<div className='clickarea' onClick={() => hideShowModal(hamster)}>
+							<h1>{hamster.name}</h1>
+							{/*<p>{hamster.imgName}</p>*/}
+							<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
+						</div>
+						<Deleter name={hamster.name} id={hamster.id} killHamster={killHamster}/>
 					</div>
-				</div>
+				</article>
 			));
 			setAllHamsters(hamsterCards);
 		}
 		else {
-			prop.checkHamstersExists(true);
+			getAllHamsters();
+			//checkHamstersExists(true); //prop.
 		}
-	}, [prop.result])
+	}, [hamsters]) //prop.
 
 
-	//Delete selected hamster:
 
-	useEffect(() => {
-		if (hamsterDelete != null) {
-			async function killHamster() {
-				console.log('gör en delete på hamster-id: '+hamsterDelete);
-				const response = await fetch('/hamsters/'+hamsterDelete, {method: 'DELETE'});
-				//const data = await response.json();
-				console.log('hamster med id: '+hamsterDelete+' raderad.');
-				hamsterIdDelete(null);
-			}
-			killHamster();
-		}
-	}, [hamsterDelete])
-
-	function hamsterIdDelete(param) {
-		console.log('radera hamster med id: '+param);
-		setHamsterDelete(param);
-	}
-
+	
 	//console.log(prop.result[0].name);
 	
 
 	return (
-		<main>
-			<button onClick={() => prop.resetData()}>Hämta om Data:</button>
-			<section className='cardWrapper'>
+		<section>
+			<section className='cardwrapper'>
 				{allHamsters}
 			</section>
 
-			<PostForm/>
+			<PostForm postHamster={postHamster}/>
+
+			{displayModal ? <Modal hamsterSelected={hamsterSelected} hide={hideShowModal}/> : null}
+			
 
 
 		{/*
@@ -77,7 +81,7 @@ const Gallery = (prop) => {
 		))
 		: 'Fetching hamsters from API'}
 		*/}
-		</main>
+		</section>
 	)
 }
 

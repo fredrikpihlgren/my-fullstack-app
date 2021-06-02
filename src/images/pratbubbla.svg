@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="400">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" width="400" height="500">
 	<defs>
 		<clipPath id="clip_dp_001" clipPathUnits="userSpaceOnUse" clip-rule="nonzero">
-			<path d="M 0,0 L 450,0 L 450,400 L 0,400 Z " clip-rule="nonzero"/>
+			<path d="M 0,0 L 400,0 L 400,500 L 0,500 Z " clip-rule="nonzero"/>
 		</clipPath>
 	</defs>
 	<g id="dp_dp001" clip-path="url(#clip_dp_001)">
-		<g id="clip">
-			<path id="dp_path002" fill="white" fill-rule="evenodd" stroke="black" stroke-width="6.66667" d="M 201.384,280.087 C 287.744,286.02 371.603,259.653 415.368,212.808 C 484.569,138.74 429.212,43.6413 299.975,14.5733 C 230.623,-1.02533 153.36,6.10667 94.212,33.568 C -23.9787,88.4413 -23.9787,198.916 94.212,253.789 L 247.423,372.399 Z "/>
+		<g id="clip" i:layer="yes">
+			<path id="dp_path002" fill="white" fill-rule="evenodd" stroke="black" stroke-width="2.66667" stroke-linecap="round" d="M 6,60.54 C 6,34.284 27.2853,12.9987 53.5413,12.9987 L 257.459,12.9987 C 283.715,12.9987 305,34.284 305,60.54 L 305,153 L 396,180 L 305,207 L 305,439.457 C 305,465.713 283.715,486.999 257.459,486.999 L 53.5413,486.999 C 27.2853,486.999 6,465.713 6,439.457 Z "/>
 		</g>
 	</g>
 </svg>

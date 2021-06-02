@@ -4,8 +4,7 @@ import '../mycss/StartPage.css';
 const StartPage = () => {
 
 	return(
-		<div>
-			Detta är startsidan!
+		<section>
 			<div className="mirrorbg">
 
 			<div className="pratbubbla">
@@ -15,7 +14,7 @@ const StartPage = () => {
 			</div>
 			<div className="mirrorbg upside">
 			</div>
-		</div>
+		</section>
 	)
 
 }

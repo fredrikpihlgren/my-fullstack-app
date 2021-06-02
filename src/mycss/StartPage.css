@@ -22,15 +22,19 @@
 	url('../images/hams.svg');
 	background-position:center center, right bottom;
 	background-size:cover, auto 200%;
+	margin-bottom:50px;
 }
 
 .pratbubbla {
 	display:block;
+	box-sizing:border-box;
 	margin:0;
-	padding:0;
+	padding:2em;
+	text-align:left;
 	height:400px;
 	width:500px;
 	background-image:url('../images/pratbubbla.svg');
 	background-position:center center;
-	background-size:cover;
+	background-size:100% 100%;
+	background-repeat:no-repeat;
 }

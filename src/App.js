@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import { useEffect } from "react";
+//import { useEffect } from "react";
 import './App.css';
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
 import Gallery from './components/Gallery';
@@ -31,31 +31,39 @@ function App() {
 
   const [hamsters, setHamsters] = useState(null);
 
-  const [loadData, setLoadData] = useState(false);
-
-  
-	useEffect(() => {
-    if (loadData) {
-      async function getAllHamsters() {
-        console.log('gör en fetch GET/HAMSTERS');
-        const response = await fetch('/hamsters', {method: 'GET'});
-        const data = await response.json();
-        setHamsters(data);
-      }
-		  getAllHamsters();
-    }
-	}, [loadData])
-
-
-  function checkHamstersExists(param) {
-    console.log('loadData is now: ', loadData);
-    console.log('hamsters usestate is: ', hamsters);
-      setLoadData(param);
+  function resetData() {
+    setHamsters(null);
   }
 
-  function resetData() {
-    setLoadData(false);
-    setHamsters(null);
+
+  //hämta alla hamstrar
+  async function getAllHamsters() {
+    console.log('gör en fetch GET/HAMSTERS');
+    const response = await fetch('/hamsters', {method: 'GET'});
+    const data = await response.json();
+    setHamsters(data);
+  }
+
+  //Radera hamster:
+  async function killHamster(id) {
+    console.log('gör en delete på hamster-id: '+id);
+    await fetch('/hamsters/'+id, {method: 'DELETE'});
+    resetData();
+    console.log('hamster med id: '+id+' raderad.');
+  }
+
+  //Posta hamster
+  async function postHamster(obj) {
+    console.log('Posta hamster: ', obj);
+    const response = await fetch('/hamsters', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj)
+    });
+    console.log(response);
+    resetData();
   }
 
   
@@ -67,9 +75,11 @@ function App() {
             {navOptions}
           </nav>
         </header>
-        <main>
+        <main className='mainclass'>
 
         före switch
+
+        {/*checkHamstersExists={checkHamstersExists}*/}
         
         <Switch>
           {/* add props into component via route:
@@ -77,7 +87,7 @@ function App() {
           */}
           <Route path="/history">HISTORIK</Route>
           <Route path="/statistics">STATS MAN!</Route>
-          <Route path="/gallery" render={() => <Gallery resetData={resetData} checkHamstersExists={checkHamstersExists} result={hamsters}/>}></Route>
+          <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster}/>}></Route>
           <Route path="/battle">BATTLE TIME!</Route>
           <Route path="/"><StartPage/></Route>
         </Switch>
@@ -88,7 +98,7 @@ function App() {
 
         </main>
         <footer>
-          yehhaha
+
         </footer>
       </div>
     </Router>
