@@ -5,12 +5,20 @@ import './App.css';
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
 import Gallery from './components/Gallery';
 import StartPage from './components/StartPage';
+import Historik from './components/Historik';
+import Statistik from './components/Statistik';
+import Battle from './components/Battle';
 
 function App() {
 
-  // kod för att visa vilken länk som är aktiv:
-
   const [navActive, setNavActive] = useState(-1);
+  const [hamsters, setHamsters] = useState(null);
+  const [winners, setWinners] = useState(null);
+  const [losers, setLosers] = useState(null);
+  const [matches, setMatches] = useState(null);
+  const [resStatus, setResStatus] = useState(200);
+
+  // kod för att visa vilken länk som är aktiv:
 
   const menuOptions = [
     {url: '/', name: 'Startsida'},
@@ -29,17 +37,47 @@ function App() {
   //Slut kod för att visa vilken länk som är aktiv
 
 
-  const [hamsters, setHamsters] = useState(null);
-
   function resetData() {
     setHamsters(null);
+    setWinners(null);
+    setLosers(null);
+    setMatches(null);
   }
+
+
+  //hämta matcher
+	async function getMatches() {
+		console.log('gör en fetch GET/matches');
+		const response = await fetch('/matches', {method: 'GET'});
+		setResStatus(response.status);
+		const data = await response.json();
+		setMatches(data);
+	}
+
+  //hämta winners
+	async function getWinners() {
+		console.log('gör en fetch GET/winners');
+		const response = await fetch('/winners', {method: 'GET'});
+		setResStatus(response.status);
+		const data = await response.json();
+		setWinners(data);
+	}
+
+  //hämta losers
+	async function getLosers() {
+		console.log('gör en fetch GET/losers');
+		const response = await fetch('/losers', {method: 'GET'});
+		setResStatus(response.status);
+		const data = await response.json();
+		setLosers(data);
+	}
 
 
   //hämta alla hamstrar
   async function getAllHamsters() {
     console.log('gör en fetch GET/HAMSTERS');
     const response = await fetch('/hamsters', {method: 'GET'});
+    setResStatus(response.status);
     const data = await response.json();
     setHamsters(data);
   }
@@ -47,7 +85,8 @@ function App() {
   //Radera hamster:
   async function killHamster(id) {
     console.log('gör en delete på hamster-id: '+id);
-    await fetch('/hamsters/'+id, {method: 'DELETE'});
+    const response = await fetch('/hamsters/'+id, {method: 'DELETE'});
+    console.log(response);
     resetData();
     console.log('hamster med id: '+id+' raderad.');
   }
@@ -77,23 +116,24 @@ function App() {
         </header>
         <main className='mainclass'>
 
-        före switch
-
-        {/*checkHamstersExists={checkHamstersExists}*/}
-        
-        <Switch>
           {/* add props into component via route:
           render={() => <Example prop1={data}/>}
           */}
-          <Route path="/history">HISTORIK</Route>
-          <Route path="/statistics">STATS MAN!</Route>
-          <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster}/>}></Route>
-          <Route path="/battle">BATTLE TIME!</Route>
-          <Route path="/"><StartPage/></Route>
-        </Switch>
-        
-        
-        efter switch
+
+
+        {
+        (resStatus === 500)
+        ?
+          <p className='showerrormessage'>{'Gick ej att nå servern. Kontakta systemadministratör'}</p>
+        :
+          <Switch>
+            <Route path="/history" render={() => <Historik getMatches={getMatches} matches={matches} hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
+            <Route path="/statistics" render={() => <Statistik winners={winners} losers={losers} getWinners={getWinners} getLosers={getLosers}/>}></Route>
+            <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster}/>}></Route>
+            <Route path="/battle" render={() => <Battle hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
+            <Route path="/"><StartPage/></Route>
+          </Switch>
+        }
 
 
         </main>

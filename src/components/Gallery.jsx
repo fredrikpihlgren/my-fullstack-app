@@ -8,63 +8,50 @@ import PostForm from './PostForm';
 
 //{result: {name, age}}, props ersätts med måsvingar.
 
-//checkHamstersExists,
-
 const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 
-
-	const [allHamsters, setAllHamsters] = useState('Fetching hamsters from API');
 
 	const [displayModal, setDisplayModal] = useState(false);
 	const [hamsterSelected, setHamsterSelected] = useState(null);
 
-	function hideShowModal(param) {
+	function hideShowModal(hideshow) {
 		setDisplayModal(!displayModal);
-		setHamsterSelected(param);
-		console.log(param);
+		setHamsterSelected(hideshow);
+		//console.log(hideshow);
 	}
 
 
 	useEffect(() => {
+		if (!hamsters) {getAllHamsters();}
+	}, [getAllHamsters, hamsters])
 
-		function hideShowModal(param) {
-			setDisplayModal(displayModal => !displayModal)
-			setHamsterSelected(param);
-			console.log(param);
-		}
-		
-		if (hamsters != null) { //prop.
-			//console.log(prop.result);
-			const hamsterCards = hamsters.map(hamster => ( //prop.
-				<article className='bgcard' key={hamster.id}>
-					<div className='hamstercard'>
-						<div className='clickarea' onClick={() => hideShowModal(hamster)}>
-							<h1>{hamster.name}</h1>
-							{/*<p>{hamster.imgName}</p>*/}
-							<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
-						</div>
-						<Deleter name={hamster.name} id={hamster.id} killHamster={killHamster}/>
+
+	let hamsterCards=null;
+
+	if (hamsters != null) {
+		//console.log(prop.result);
+		hamsterCards = hamsters.map(hamster => (
+			<article className='bgcard' key={hamster.id}>
+				<div className='hamstercard'>
+					<div className='clickarea' onClick={() => hideShowModal(hamster)}>
+						<h1>{hamster.name}</h1>
+						{/*<p>{hamster.imgName}</p>*/}
+						<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
 					</div>
-				</article>
-			));
-			setAllHamsters(hamsterCards);
-		}
-		else {
-			getAllHamsters();
-			//checkHamstersExists(true); //prop.
-		}
-	}, [hamsters]) //prop.
-
-
+					<Deleter name={hamster.name} id={hamster.id} killHamster={killHamster}/>
+				</div>
+			</article>
+		));
+	}
 
 	
-	//console.log(prop.result[0].name);
+	//console.log(result[0].name);
 	
 
 	return (
 		<section>
 			<section className='cardwrapper'>
-				{allHamsters}
+				{hamsterCards}
 			</section>
 
 			<PostForm postHamster={postHamster}/>

@@ -1,6 +1,40 @@
 import '../mycss/Modal.css';
+//import {useState} from 'react';
 
 const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games, wins, defeats}, hide}) => {
+
+	/*
+	const [matchWinners, setMatchWinners] = useState(null);
+	const [getLocker, setGetLocker] = useState(false);
+	const [resStatus, setResStatus] = useState(200);
+ 
+    //hämta /matchWinners/:id
+    async function getMatchWinners(id) {
+    	console.log('gör en fetch GET/matchWinners/'+id);
+        const response = await fetch('/matchWinners/'+id, {method: 'GET'});
+        setResStatus(response.status);
+        const data = await response.json();
+        setMatchWinners(data);
+    }
+    if (!getLocker) {setGetLocker(true);getMatchWinners(id);}
+    if (matchWinners) {console.log(matchWinners);}
+
+	console.log('anropar: ', resStatus);
+
+	let matchWinnersDisplay=null;
+
+	if (matchWinners != null) {
+		if (resStatus !== 404) {
+			matchWinnersDisplay = matchWinners.map(m => (
+				<p key={m.id}>
+					winnerId: {m.winnerId}
+					loserId: {m.loserId}
+				</p>
+			));
+		}
+	}
+	*/
+
 
 	return(
 		<div className='modal'>
@@ -23,7 +57,12 @@ const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games,
 					</section>
 					<section className='modalblock'>
 					<p>{id}</p>
-					Förutom G-nivån ska man kunna välja en hamster, och se vilka den har besegrat. (/matchWinners)
+					Förutom G-nivån ska man kunna välja en hamster, och se vilka den har besegrat. (/matchWinners/:id)
+					<div>
+					{/*matchWinnersDisplay*/}
+				
+					</div>
+					
 					</section>
 					
 

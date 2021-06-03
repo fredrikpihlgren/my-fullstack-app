@@ -1,8 +1,26 @@
 import { useState } from 'react';
+import '../mycss/Form.css';
 
 const PostForm = ({postHamster}) => {
 
-	const [inputText, setInputText] = useState('default');
+	let hamsterimages=[];
+	for (let i=1;i<=40;i++) {
+		hamsterimages.push('hamster-'+i+'.jpg');
+	}
+	const hamsterimagelist = hamsterimages;
+
+	const [inputName, setInputName] = useState('');
+
+	const [selectedImage, setSelectedImage] = useState('hamster-1.jpg');
+
+	//let nameIsValid = (inputName !== '')
+
+	/*
+	let nameClass = '';
+	if (nameTouched) {
+		nameClass = nameIsValid ? 'validinput' : 'errorinput'
+	}
+	*/
 
 
 	function createObj(name, age, loves, favFood, imgName) {
@@ -22,31 +40,68 @@ const PostForm = ({postHamster}) => {
 
 	}
 
-	function validate(name) {
+	function validate(name, image) {
 
 
-		createObj(name, 777, 'Rulla runt', 'gräs', 'hamster-22.jpg');
+		createObj(name, 777, 'Rulla runt', 'gräs', image);
 	}
 
-	const ageList = (
-		<option>Saab</option>
-	)
 
+	/*
+	setExampleState({...exampleState,  masterField2: {
+        fieldOne: "c",
+        fieldTwo: {
+           fieldTwoOne: "d",
+           fieldTwoTwo: "e"
+           }
+        },
+   }})
+   */
 
 	return(
-		<div>
+		<div className='formwrapper'>
+			<h1>Posta ny hamster:</h1>
 			<label>Namn:
-				<input type="text" placeholder="Your name..." onChange={event =>
-					setInputText(event.target.value.trim())
-					}/>
+				<input type="text" onChange={event =>
+					setInputName(event.target.value.trim())
+					}
+					value={inputName}
+					//className={nameClass}
+					//onBlur={() => setNameTouched(true)}
+				/>
 			</label>
+			<div className='message'>Namn måste vara en sträng</div>
 			<label>Ålder:
-				<select>
-				{ageList}
+			</label>
+				
+				<div className="imagelister">
+					{hamsterimagelist.map(arr => (
+						<img
+						src={` /img/${arr} `}
+						alt={arr}
+						key={arr}
+						className={`previewimage ${(arr === selectedImage) ? 'previewimage-selected' : ''}`}
+						onClick={() => setSelectedImage(arr)}
+						/>
+					))}
+				</div>
+
+				{/*
+				<select onChange={event => setSelectedImage(event.target.value)}>
+				{myArray.map((arr, index) => (
+					<option key={index} value={arr}>{arr}</option>
+				))}
 				</select>
+				*/}
+				<img src={` /img/${selectedImage} `} alt={selectedImage} className='previewimage'/>
+			
+
+			<label>Extern bild:
+				<input type="text"
+					/>
 			</label>
 
-			<button onClick={() => {validate(inputText)}}>Posta ny hamster:</button>
+			<button onClick={() => {validate(inputName, selectedImage)}}>Posta ny hamster:</button>
 		</div>
 	)
 
