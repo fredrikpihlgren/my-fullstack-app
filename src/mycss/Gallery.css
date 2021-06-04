@@ -71,7 +71,7 @@
 	background-color:var(--color4);
 }
 
-.thumbnail, .thumbnailmini {
+.thumbnail, .thumbnailmini, .nohover {
 	margin:0;
 	width:200px;
 	height:120px;
@@ -119,5 +119,5 @@
 }
 
 .tallcard {
-	height:430px;
+	height:480px;
 }

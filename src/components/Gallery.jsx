@@ -5,6 +5,8 @@ import Deleter from './Deleter';
 import Modal from './Modal';
 import PostForm from './PostForm';
 
+const imgChecker = require('../imgchecker.js');
+
 
 //{result: {name, age}}, props ersätts med måsvingar.
 
@@ -25,6 +27,15 @@ const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 		if (!hamsters) {getAllHamsters();}
 	}, [getAllHamsters, hamsters])
 
+	/*
+	function imgChecker(imageurl) {
+		//console.log(imageurl);
+		if (!imageurl.startsWith("http")) {
+			return ` /img/${imageurl} `
+		}
+		return imageurl;
+	}
+	*/
 
 	let hamsterCards=null;
 
@@ -36,7 +47,8 @@ const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 					<div className='clickarea' onClick={() => hideShowModal(hamster)}>
 						<h1>{hamster.name}</h1>
 						{/*<p>{hamster.imgName}</p>*/}
-						<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
+						{/*` /img/${hamster.imgName} `*/}
+						<img src={imgChecker(hamster.imgName)} alt={hamster.imgName} className='thumbnail' />
 					</div>
 					<Deleter name={hamster.name} id={hamster.id} killHamster={killHamster}/>
 				</div>
@@ -50,6 +62,7 @@ const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 
 	return (
 		<section>
+			<h1 className="mainheader">Galleri:</h1>
 			<section className='cardwrapper'>
 				{hamsterCards}
 			</section>

@@ -175,8 +175,8 @@ function App() {
 
 
         </main>
-        <footer>
-
+        <footer className="byline">
+          Skapad av Fredrik Pihlgren, projekt IT-högskolan Stockholm, 2021.
         </footer>
       </div>
     </Router>

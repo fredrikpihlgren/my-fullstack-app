@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" width="500" height="400">
+	<defs>
+		<clipPath id="clip_dp_001" clipPathUnits="userSpaceOnUse" clip-rule="nonzero">
+			<path d="M 0,0 L 500,0 L 500,400 L 0,400 Z " clip-rule="nonzero"/>
+		</clipPath>
+	</defs>
+	<g id="dp_dp001" clip-path="url(#clip_dp_001)">
+		<g id="clip" i:layer="yes">
+			<path id="dp_path002" fill="white" fill-rule="evenodd" stroke="black" stroke-width="2.66667" stroke-linecap="round" d="M 439.687,3.952 C 465.943,3.952 487.228,25.2373 487.228,51.4933 L 487.228,255.411 C 487.228,281.667 465.943,302.952 439.687,302.952 L 347.227,302.952 L 320.227,393.952 L 293.227,302.952 L 60.7693,302.952 C 34.5133,302.952 13.228,281.667 13.228,255.411 L 13.228,51.4933 C 13.228,25.2373 34.5133,3.952 60.7693,3.952 Z "/>
+		</g>
+	</g>
+</svg>

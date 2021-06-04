@@ -5,6 +5,7 @@ const StartPage = () => {
 
 	return(
 		<section className="startpagewrapper">
+			<h1 className="mainheader">HamsterWars:</h1>
 			<div className="pratbubbla">
 				<div className="prat">
 					<h1>Välkommen till HamsterWars!</h1>

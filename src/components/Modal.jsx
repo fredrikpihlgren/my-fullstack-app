@@ -1,6 +1,8 @@
 import '../mycss/Modal.css';
 //import {useState} from 'react';
 
+const imgChecker = require('../imgchecker.js');
+
 const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games, wins, defeats}, hide}) => {
 
 	/*
@@ -43,7 +45,7 @@ const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games,
 				<main className='modalwrapper'>
 					<section className='modalblock'>
 						<h1>{name}</h1>
-						<img src={` /img/${imgName} `} alt={name} className='hamsterimg'/>
+						<img src={imgChecker(imgName)} alt={name} className='hamsterimg'/>
 					</section>
 					<section className='modalblock'>
 						
