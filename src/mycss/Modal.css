@@ -35,7 +35,6 @@
 	  display:flex;
 	  flex-flow:row wrap;
 	  width:50%;
-	  background-color:red;
 	  overflow-x: hidden;
 	  overflow-y: hidden;
 	  
@@ -70,7 +69,6 @@
 	  display:block;
 	  width:50%;
 	  height:2.5em;
-	  background-color:blue;
 	  margin:0;
 	  padding:0;
 	  text-align:left;

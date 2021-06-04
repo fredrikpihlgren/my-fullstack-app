@@ -91,11 +91,49 @@ function App() {
     console.log('hamster med id: '+id+' raderad.');
   }
 
+  //Radera match:
+  async function killMatch(id) {
+    console.log('gör en delete på match-id: '+id);
+    const response = await fetch('/matches/'+id, {method: 'DELETE'});
+    console.log(response);
+    resetData();
+    console.log('match med id: '+id+' raderad.');
+  }
+
   //Posta hamster
   async function postHamster(obj) {
     console.log('Posta hamster: ', obj);
     const response = await fetch('/hamsters', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj)
+    });
+    console.log(response);
+    resetData();
+  }
+
+  
+  //Posta match
+  async function postMatch(obj) {
+    console.log('Posta match: ', obj);
+    const response = await fetch('/matches', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj)
+    });
+    console.log(response);
+    resetData();
+  }
+
+  //Uppdatera hamster
+  async function updateHamster(obj) {
+    console.log('Uppdatera hamster: ', obj);
+    const response = await fetch('/hamsters/'+obj.id, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -127,10 +165,10 @@ function App() {
           <p className='showerrormessage'>{'Gick ej att nå servern. Kontakta systemadministratör'}</p>
         :
           <Switch>
-            <Route path="/history" render={() => <Historik getMatches={getMatches} matches={matches} hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
+            <Route path="/history" render={() => <Historik getMatches={getMatches} matches={matches} hamsters={hamsters} getAllHamsters={getAllHamsters} killMatch={killMatch}/>}></Route>
             <Route path="/statistics" render={() => <Statistik winners={winners} losers={losers} getWinners={getWinners} getLosers={getLosers}/>}></Route>
             <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster}/>}></Route>
-            <Route path="/battle" render={() => <Battle hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
+            <Route path="/battle" render={() => <Battle postMatch={postMatch} updateHamster={updateHamster} hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
             <Route path="/"><StartPage/></Route>
           </Switch>
         }

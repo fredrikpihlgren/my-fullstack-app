@@ -1,9 +1,13 @@
 import '../mycss/Battle.css';
 import { useEffect } from "react";
-//import {useState} from 'react';
+import {useState} from 'react';
 
 
-const Battle = ({hamsters, getAllHamsters}) => {
+const Battle = ({hamsters, getAllHamsters, postMatch, updateHamster}) => {
+
+	const [battleProgress, setBattleProgress] = useState(0);
+	const [winner, setWinner] = useState(null);
+
 
 	useEffect(() => {
 		if (!hamsters) {getAllHamsters();}
@@ -11,8 +15,6 @@ const Battle = ({hamsters, getAllHamsters}) => {
 
 	let hamsterWarriors=[];
 
-
-	//let hamsterCards=null;
 
 	let hamsterShow=null;
 
@@ -33,13 +35,92 @@ const Battle = ({hamsters, getAllHamsters}) => {
 		//Nu har vi två tävlande som inte kan vara samma:
 		console.log(hamsterWarriors);
 
-		hamsterShow = hamsterWarriors.map((hamster, index) => (
-				<div key={hamster.id}>
-					<h1>{hamster.name}</h1>
-					<img src={` /img/${hamster.imgName} `} alt={hamster.imgName} className='thumbnail' />
-					{(index === 0) ? (<div className='versus'>VS</div>) : ''}
+		function nextProgress(warriordata, num) {
+			console.log('Winner is '+warriordata.name+', med klicknummer: '+num);
+			setWinner(warriordata);
+			let loserNum=0;
+			if (num === loserNum) {loserNum=1;}
+			console.log('winner klicknum is '+num+', loser klicknum is '+loserNum);
+			//POSTA ny match
+			const matchObj = {
+				id: '123',
+				loserId: hamsterWarriors[loserNum].id,
+				winnerId: warriordata.id
+			}
+			postMatch(matchObj);
+
+			//UPPDATERA Vinnare
+			let addwin=warriordata.wins+1;
+			let addgame=warriordata.games+1;
+			let hamsterObj = {
+				id: warriordata.id,
+				games: addgame,
+				wins: addwin
+			}
+			updateHamster(hamsterObj);
+
+			//UPPDATERA Förlorare
+			let addloss=hamsterWarriors[loserNum].defeats+1;
+			addgame=hamsterWarriors[loserNum].games+1;
+			hamsterObj = {
+				id: hamsterWarriors[loserNum].id,
+				games: addgame,
+				defeats: addloss
+			}
+			updateHamster(hamsterObj);
+
+			setBattleProgress(1);
+			
+			/*
+			if (num === 0) {
+				setWinnerLoser([hamsterWarriors[0], hamsterWarriors[1]]);
+			}
+			else {
+				setWinnerLoser([hamsterWarriors[1], hamsterWarriors[0]]);
+			}
+			console.log('the winner is', winnerLoser[0].name);
+			console.log('the loser is', winnerLoser[1].name);
+			*/
+			//setBattleProgress(1);
+		}
+
+		let displayWarrior = (warriordata, num) => {return (
+			<div className='battlecard'>
+				<h1>{warriordata.name}</h1>
+				<img
+				src={` /img/${warriordata.imgName} `}
+				alt={warriordata.imgName} className='thumbnail'
+				onClick={() => nextProgress(warriordata, num)}
+				/>
+			</div>
+		)}
+
+		if (battleProgress === 0) {
+			hamsterShow = (
+				<div>
+					<h1>Klicka på den sötaste hamstern</h1>
+					{displayWarrior(hamsterWarriors[0], 0)}
+						<div className='versus'>VS</div>
+					{displayWarrior(hamsterWarriors[1], 1)}
 				</div>
-		));
+			);
+		}
+		else {
+			hamsterShow = (
+				<div>
+					<h1>VINNARE!</h1>
+					
+					<h1>{winner.name}</h1>
+					<img
+					src={` /img/${winner.imgName} `}
+					alt={winner.imgName} className='thumbnailwinner'
+					/>
+					<button>Nästa match</button>
+
+
+				</div>
+			);
+		}
 			
 	}
 	
@@ -64,10 +145,11 @@ När användaren klickar ska båda hamster-objekten uppdateras: vinnaren får +1
 
 Tänk på att uppdatera alla dokument i databasen där vinst och förlust lagras.
 			</p>
+			
 
-			<div className='battlewrapper'>
+			<article className='battlewrapper'>
 				{hamsterShow}
-			</div>
+			</article>
 			
 
 		</section>

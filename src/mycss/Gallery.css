@@ -71,7 +71,7 @@
 	background-color:var(--color4);
 }
 
-.thumbnail {
+.thumbnail, .thumbnailmini {
 	margin:0;
 	width:200px;
 	height:120px;
@@ -79,4 +79,45 @@
 	box-shadow: 4px 4px var(--shadecol);
 	transition: all 0.3s ease-in-out;
 	filter:var(--imgEffect);
+}
+
+.thumbnailmini {
+	width:120px;
+	height:70px;
+}
+
+.thumbnailwinner {
+	width:300px;
+	height:180px;
+	border:2px solid black;
+	display:block;
+	margin:2em auto;
+	box-shadow: 4px 4px var(--shadecol);
+}
+
+
+.vs {
+	width:90%;
+	display:block;
+	margin:1em auto;
+	background-image:linear-gradient(to right, transparent, red, transparent);
+	background-size:100% auto;
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+
+.rubrikhistory {
+	padding:0;
+	margin:1em auto;
+}
+
+.nofound {
+	padding:0;
+	margin:1em 0;
+	width:100%;
+	height:100px;
+}
+
+.tallcard {
+	height:430px;
 }

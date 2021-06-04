@@ -7,8 +7,14 @@
 
   --errorcolor:#C00000;
 
+  --bord:black;
+	--imgEffect:none;
+	--bordShade:rgba(0,0,0,0.6);
+
   --shadecol:#888888;
   box-sizing: border-box;
+
+  font-variant-caps: petite-caps;
 
   /*
   @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');

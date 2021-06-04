@@ -1,8 +1,9 @@
 import '../mycss/Gallery.css';
 import { useEffect } from "react";
+import Deleter from './Deleter';
 
 
-const Historik = ({getMatches, matches, hamsters, getAllHamsters}) => {
+const Historik = ({getMatches, matches, hamsters, getAllHamsters, killMatch}) => {
 
 	useEffect(() => {
 		if (!matches) {getMatches();}
@@ -15,15 +16,24 @@ const Historik = ({getMatches, matches, hamsters, getAllHamsters}) => {
 
 	let matchCards=null;
 
+	//let found=hamsters.find((person) => person === match.winnerId);
+
+	function displayHamster(hamster) {
+		let returnData=(<h1 className='nofound'>Hamster has been deleted.</h1>);
+		if (hamster) {returnData=(<div><h1 className='rubrikhistory'>{hamster.name}</h1><img src={` /img/${hamster.imgName} `} className='thumbnailmini' alt={hamster.name}/></div>);console.log(hamster);}
+		return returnData;
+	}
+
 	if (matches != null && hamsters != null) {
 		matchCards = matches.map(match => (
-			<article className='bgcard' key={match.id}>
+			<article className='bgcard tallcard' key={match.id}>
 				<div className='neutralcard'>
-						{/*hamsters.find((hamster) => hamster.id === match.winnerId)*/}
+						{displayHamster(hamsters.find((hamster) => hamster.id === match.winnerId))}
 						
-						<p>Winner id: {match.winnerId}</p>
-						<h1>VS</h1>
-						<p>Loser id: {match.loserId}</p>
+						{/*<p>Winner id: {match.winnerId}</p>*/}
+						<h1 className='vs'>VS</h1>
+						{displayHamster(hamsters.find((hamster) => hamster.id === match.loserId))}
+						{<Deleter name='match' id={match.id} killHamster={killMatch}/>}
 				</div>
 			</article>
 		));
