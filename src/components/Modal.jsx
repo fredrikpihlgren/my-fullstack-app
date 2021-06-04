@@ -1,41 +1,43 @@
+
 import '../mycss/Modal.css';
 //import {useState} from 'react';
+import { useEffect } from "react";
 
 const imgChecker = require('../imgchecker.js');
 
-const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games, wins, defeats}, hide}) => {
+const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games, wins, defeats}, hide, getMatchWinners, matchWinners, hamsters, getAllHamsters}) => {
 
-	/*
-	const [matchWinners, setMatchWinners] = useState(null);
-	const [getLocker, setGetLocker] = useState(false);
-	const [resStatus, setResStatus] = useState(200);
- 
-    //hämta /matchWinners/:id
-    async function getMatchWinners(id) {
-    	console.log('gör en fetch GET/matchWinners/'+id);
-        const response = await fetch('/matchWinners/'+id, {method: 'GET'});
-        setResStatus(response.status);
-        const data = await response.json();
-        setMatchWinners(data);
-    }
-    if (!getLocker) {setGetLocker(true);getMatchWinners(id);}
-    if (matchWinners) {console.log(matchWinners);}
+	useEffect(() => {
+		if (!matchWinners) {getMatchWinners(id);}
+	}, [getMatchWinners, matchWinners, id])
 
-	console.log('anropar: ', resStatus);
+	useEffect(() => {
+		if (!hamsters && matchWinners) {getAllHamsters();}
+	}, [getAllHamsters, hamsters, matchWinners])
 
-	let matchWinnersDisplay=null;
-
-	if (matchWinners != null) {
-		if (resStatus !== 404) {
-			matchWinnersDisplay = matchWinners.map(m => (
-				<p key={m.id}>
-					winnerId: {m.winnerId}
-					loserId: {m.loserId}
-				</p>
-			));
-		}
+	function displayHamster(hamster) {
+		let returnData=(<h1 className='nofound'>Hamster has been deleted.</h1>);
+		if (hamster) {returnData=(<div><h1 className='rubrikhistory'>{hamster.name}</h1><img src={imgChecker(hamster.imgName)} className='thumbnailmodal' alt={hamster.name}/></div>);}
+		return returnData;
 	}
-	*/
+
+	let winnerCards=null;
+
+	if (matchWinners != null && hamsters != null) {
+		winnerCards = matchWinners.map(match => (
+			<article className='bgcard' key={match.id}>
+				<div className='neutralcard'>
+						{displayHamster(hamsters.find((hamster) => hamster.id === match.loserId))}
+						{/*
+						<h1>{hamster.name}</h1>
+						<img src={imgChecker(hamster.imgName)} alt={hamster.imgName} className='nohover' />
+						<h1>Antal vinster: {hamster.wins}</h1>
+						*/}
+				</div>
+			</article>
+		));
+	}
+
 
 
 	return(
@@ -58,9 +60,9 @@ const Modal = ({hamsterSelected: {id, name, imgName, age, favFood, loves, games,
 						<div className='infoblock'>Förluster:</div><div className='infoblock'>{defeats}</div>
 					</section>
 					<section className='modalblock'>
-					<p>{id}</p>
-					Förutom G-nivån ska man kunna välja en hamster, och se vilka den har besegrat. (/matchWinners/:id)
+					<p>Besegrade hamstrar:</p>
 					<div>
+						{winnerCards}
 					{/*matchWinnersDisplay*/}
 				
 					</div>

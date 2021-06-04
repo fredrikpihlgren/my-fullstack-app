@@ -11,7 +11,9 @@ import Battle from './components/Battle';
 
 function App() {
 
+
   const [navActive, setNavActive] = useState(-1);
+  const [matchWinners, setMatchWinners] = useState(null);
   const [hamsters, setHamsters] = useState(null);
   const [winners, setWinners] = useState(null);
   const [losers, setLosers] = useState(null);
@@ -42,12 +44,26 @@ function App() {
     setWinners(null);
     setLosers(null);
     setMatches(null);
+    setMatchWinners(null);
+  }
+
+  function resetMatchWinners() {
+    setMatchWinners(null);
   }
 
 
+  //hämta matchwinners
+	async function getMatchWinners(id) {
+		//console.log('gör en fetch GET/matchWinners/'+id);
+		const response = await fetch('/matchWinners/'+id, {method: 'GET'});
+		setResStatus(response.status);
+		const data = await response.json();
+		setMatchWinners(data);
+	}
+
   //hämta matcher
 	async function getMatches() {
-		console.log('gör en fetch GET/matches');
+		//console.log('gör en fetch GET/matches');
 		const response = await fetch('/matches', {method: 'GET'});
 		setResStatus(response.status);
 		const data = await response.json();
@@ -56,7 +72,7 @@ function App() {
 
   //hämta winners
 	async function getWinners() {
-		console.log('gör en fetch GET/winners');
+		//console.log('gör en fetch GET/winners');
 		const response = await fetch('/winners', {method: 'GET'});
 		setResStatus(response.status);
 		const data = await response.json();
@@ -65,7 +81,7 @@ function App() {
 
   //hämta losers
 	async function getLosers() {
-		console.log('gör en fetch GET/losers');
+		//console.log('gör en fetch GET/losers');
 		const response = await fetch('/losers', {method: 'GET'});
 		setResStatus(response.status);
 		const data = await response.json();
@@ -75,7 +91,7 @@ function App() {
 
   //hämta alla hamstrar
   async function getAllHamsters() {
-    console.log('gör en fetch GET/HAMSTERS');
+    //console.log('gör en fetch GET/HAMSTERS');
     const response = await fetch('/hamsters', {method: 'GET'});
     setResStatus(response.status);
     const data = await response.json();
@@ -84,25 +100,25 @@ function App() {
 
   //Radera hamster:
   async function killHamster(id) {
-    console.log('gör en delete på hamster-id: '+id);
+    //console.log('gör en delete på hamster-id: '+id);
     const response = await fetch('/hamsters/'+id, {method: 'DELETE'});
     console.log(response);
     resetData();
-    console.log('hamster med id: '+id+' raderad.');
+    //console.log('hamster med id: '+id+' raderad.');
   }
 
   //Radera match:
   async function killMatch(id) {
-    console.log('gör en delete på match-id: '+id);
+    //console.log('gör en delete på match-id: '+id);
     const response = await fetch('/matches/'+id, {method: 'DELETE'});
     console.log(response);
     resetData();
-    console.log('match med id: '+id+' raderad.');
+    //console.log('match med id: '+id+' raderad.');
   }
 
   //Posta hamster
   async function postHamster(obj) {
-    console.log('Posta hamster: ', obj);
+    //console.log('Posta hamster: ', obj);
     const response = await fetch('/hamsters', {
     method: 'POST',
     headers: {
@@ -167,7 +183,7 @@ function App() {
           <Switch>
             <Route path="/history" render={() => <Historik getMatches={getMatches} matches={matches} hamsters={hamsters} getAllHamsters={getAllHamsters} killMatch={killMatch}/>}></Route>
             <Route path="/statistics" render={() => <Statistik winners={winners} losers={losers} getWinners={getWinners} getLosers={getLosers}/>}></Route>
-            <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster}/>}></Route>
+            <Route path="/gallery" render={() => <Gallery hamsters={hamsters} getAllHamsters={getAllHamsters} killHamster={killHamster} postHamster={postHamster} getMatchWinners={getMatchWinners} matchWinners={matchWinners} resetMatchWinners={resetMatchWinners}/>}></Route>
             <Route path="/battle" render={() => <Battle postMatch={postMatch} updateHamster={updateHamster} hamsters={hamsters} getAllHamsters={getAllHamsters}/>}></Route>
             <Route path="/"><StartPage/></Route>
           </Switch>

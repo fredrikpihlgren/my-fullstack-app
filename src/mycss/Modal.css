@@ -96,6 +96,14 @@
 	  cursor: pointer;
   }
 
+  .thumbnailmodal {
+	margin:0;
+	width:200px;
+	height:120px;
+	border:2px solid black;
+	box-shadow: 4px 4px var(--shadecol);
+	}
+
 
   @media screen and (max-width: 800px) {
 	.modalblock {

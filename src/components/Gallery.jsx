@@ -10,7 +10,7 @@ const imgChecker = require('../imgchecker.js');
 
 //{result: {name, age}}, props ersätts med måsvingar.
 
-const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
+const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster, getMatchWinners, matchWinners, resetMatchWinners}) => {
 
 
 	const [displayModal, setDisplayModal] = useState(false);
@@ -19,6 +19,7 @@ const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 	function hideShowModal(hideshow) {
 		setDisplayModal(!displayModal);
 		setHamsterSelected(hideshow);
+		resetMatchWinners();
 		//console.log(hideshow);
 	}
 
@@ -69,7 +70,7 @@ const Gallery = ({hamsters, getAllHamsters, killHamster, postHamster}) => {
 
 			<PostForm postHamster={postHamster}/>
 
-			{displayModal ? <Modal hamsterSelected={hamsterSelected} hide={hideShowModal}/> : null}
+			{displayModal ? <Modal hamsters={hamsters} getAllHamsters={getAllHamsters} hamsterSelected={hamsterSelected} hide={hideShowModal} getMatchWinners={getMatchWinners} matchWinners={matchWinners}/> : null}
 			
 
 
